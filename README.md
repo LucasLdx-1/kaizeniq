@@ -4,7 +4,7 @@
 
 ### Continuous improvement meets agentic AI
 
-**An AI Agent Factory that diagnoses an ISO 9001 organization through its Microsoft 365 signals, grounds every conclusion in Foundry IQ, and proposes — then trains — a portfolio of specialized agents for digital transformation.**
+**An AI Agent Factory grounded in ISO 9001 process knowledge. KaizenIQ uses an organization's mapped processes so that AI agents can understand the whole company, and from that understanding, proposes the specialized agents that will drive its digital transformation, monitoring, and continuous improvement.**
 
 *Microsoft Agents League Hackathon 2026 · Reasoning Agents track (Microsoft Foundry)*
 
@@ -12,22 +12,25 @@
 
 ---
 
-## The problem
+## The idea
 
-ISO 9001 organizations live a double life. On paper: controlled documents, defined KPIs, audit-ready processes. In practice: stale work instructions circulating as email attachments, corrective actions aging on forgotten Planner boards, managers spending hours every week manually compiling KPI emails, and approval bottlenecks visible only in Teams chat archaeology.
+Most agents are asked to reason about a business they know nothing about. KaizenIQ starts from a different premise: ISO 9001 certified organizations already have their processes documented, with owners, KPIs, and clauses. That documented knowledge is exactly what an agent needs to truly understand a company.
 
-The gap between *the documented organization* and *the real organization* is exactly where audits fail, money leaks, and digital transformation initiatives die. Today, finding that gap requires weeks of consultant interviews.
+KaizenIQ ingests those process flows as its knowledge base and grounds every agent in them. From that understanding, it does two things: it diagnoses where the organization can improve, and it proposes a portfolio of specialized agents to drive digital transformation, continuous monitoring, and improvement. ISO 9001 is not the goal here. It is the structured, trustworthy source of organizational knowledge that makes grounded agentic reasoning possible.
 
-## The solution
+## How it works
 
-KaizenIQ reads both sides — the documented ISO 9001 processes **and** the organization's Microsoft 365 activity signals — and reasons across them with a multi-agent pipeline:
+A Master Orchestrator runs a seven-step reasoning pipeline over the process knowledge:
 
-1. **Diagnose** — five specialized agents map drift, repetitive work, bottlenecks and ISO non-conformities, with evidence for every finding.
-2. **Visualize** — every process becomes an auto-generated flowchart: the catalyst for transformation conversations.
-3. **Propose** — the **Agent Factory** converts findings into a 14-agent portfolio: 7 agents implemented in this MVP plus 7 new specialized agents, each with complete specs — objective, scope, guardrails, human-in-the-loop checkpoints, success metrics and estimated yearly impact.
-4. **Train** — one click asks Foundry IQ for the organizational grounding and composes a production-ready, citation-backed system prompt for any proposed agent. New agents are born already knowing the company.
+1. **Understand** — read every documented process and build a complete picture of the organization.
+2. **Diagnose** — specialized agents identify drift, repetitive manual work, bottlenecks and ISO non-conformities, each backed by evidence and mapped to the clause it threatens.
+3. **Visualize** — every process becomes an auto-generated flowchart, and the whole organization becomes a single process map.
+4. **Propose** — the **Agent Factory** converts that understanding into a portfolio of specialized agents for transformation and monitoring, each with a complete spec: objective, scope, guardrails, human-in-the-loop checkpoints, success metrics and estimated impact.
+5. **Train** — one click pulls organizational grounding from the Foundry model and composes a production-ready, citation-backed system prompt, so a new agent is born already knowing the company.
 
-> **Diagnostic result on the demo dataset:** 15/15 processes drifting · 11 non-conformities (4 critical) · ~2,000 recoverable hours/year · **~$86,584/year** estimated impact from the proposed agents.
+You can grow the knowledge live: paste a new process and the Foundry model infers its ISO clause and KPIs, draws its flowchart, and folds it into the company-wide map and the orchestrator's knowledge. The **Talk to the Agents** chat lets you ask the orchestrator anything about the organization, grounded in the full process catalog with citations.
+
+> **Diagnostic result on the demo dataset:** 15/15 processes analyzed · 11 non-conformities (4 critical) · ~2,000 recoverable hours/year · **~$86,584/year** estimated impact from the proposed agents.
 
 ## Microsoft IQ integration (Foundry IQ)
 
@@ -36,8 +39,8 @@ KaizenIQ uses **Foundry IQ** as its knowledge layer, following the official [IQ 
 | IQ Series pattern | KaizenIQ implementation |
 |---|---|
 | Knowledge Source over an Azure AI Search index | `kaizeniq-iso-processes` — one document per ISO process |
-| Knowledge Base paired with an Azure OpenAI deployment | `kaizeniq-kb` + `gpt-4o-mini` for answer synthesis |
-| Agentic retrieval with reasoning effort + citations | Every agent-training call and free-form Q&A returns grounded answers with `[PROC-xxx]` citations |
+| Knowledge Base paired with a model deployment | `kaizeniq-kb` for grounded answer synthesis |
+| Agentic retrieval with reasoning effort + citations | Every agent-training call and chat returns grounded answers with `[PROC-xxx]` citations |
 | SDK pin from the cookbook | `azure-search-documents==12.1.0b1` |
 
 **Dual-mode design:** `FOUNDRY_MODE=live` uses real Azure resources (deployable via the [IQ Series Deploy to Azure button](https://aka.ms/iq-series/deploytoazure)); `FOUNDRY_MODE=mock` runs the identical pipeline fully offline against the same dataset — so the demo never depends on network or quota. The mock retriever mirrors live behavior: keyword retrieval, top-k selection, synthesized answer, citations.
@@ -66,42 +69,47 @@ The simulated Microsoft 365 signals (Teams, Outlook, Planner, SharePoint) repres
 ## Architecture
 
 ```
-                        ┌──────────────────────────────────────────┐
-                        │            KaizenIQ Portal (React)        │
-                        │  Dashboard · Agents · NCs · Flowcharts    │
-                        └────────────────────┬─────────────────────┘
-                                             │ REST
-                        ┌────────────────────▼─────────────────────┐
-                        │           FastAPI backend                 │
-                        │  ┌─────────────────────────────────────┐ │
-                        │  │        Master Orchestrator          │ │
-                        │  │  7-step reasoning pipeline + cache  │ │
-                        │  └──┬──────────────────────────────┬───┘ │
-                        │     │                              │     │
-                        │  ┌──▼───────────────┐   ┌──────────▼───┐ │
-                        │  │ Diagnostic agents │   │ Agent Factory│ │
-                        │  │ CurrentState      │   │ 14-agent     │ │
-                        │  │ RepetitiveWork    │──▶│ portfolio +  │ │
-                        │  │ Bottleneck        │   │ train_agent()│ │
-                        │  │ NonConformity     │   └──────┬───────┘ │
-                        │  │ Flowchart         │          │         │
-                        │  └──┬───────────────┘           │         │
-                        └─────┼───────────────────────────┼─────────┘
-                              │ grounding queries          │ grounded prompts
-                        ┌─────▼───────────────────────────▼─────────┐
-                        │              Foundry IQ                    │
-                        │  Knowledge Source ─▶ Knowledge Base        │
-                        │  (Azure AI Search)   (+ gpt-4o-mini)       │
-                        │        ▲    agentic retrieval + citations  │
-                        └────────┼───────────────────────────────────┘
-                                 │ indexed
-                  ┌──────────────┴──────────────┐
-                  │ ISO 9001 processes (15)      │   ┌─ M365 signals ─────────┐
-                  │ data/iso_processes.json      │   │ Teams · Outlook ·       │
-                  └─────────────────────────────┘   │ Planner · SharePoint    │
-                                                    │ data/m365_activity.json │
-                                                    │ (Work IQ in production) │
-                                                    └─────────────────────────┘
+              ┌──────────────────────────────────────────────────────┐
+              │                 KaizenIQ Portal (React)               │
+              │  Dashboard · Talk to Agents · Add Process · Company    │
+              │  Map · Agent Portfolio · Non-Conformities · Telemetry  │
+              └────────────────────────┬─────────────────────────────┘
+                                       │ REST
+              ┌────────────────────────▼─────────────────────────────┐
+              │                   FastAPI backend                     │
+              │  ┌─────────────────────────────────────────────────┐ │
+              │  │              Master Orchestrator                │ │
+              │  │     7-step reasoning pipeline + chat + train    │ │
+              │  └──┬───────────────────────────────────────┬──────┘ │
+              │     │                                       │        │
+              │  ┌──▼───────────────┐          ┌────────────▼──────┐ │
+              │  │ Diagnostic agents │          │   Agent Factory   │ │
+              │  │ CurrentState      │  ───────▶│  agent portfolio  │ │
+              │  │ RepetitiveWork    │          │  + train_agent()  │ │
+              │  │ Bottleneck        │          └────────┬──────────┘ │
+              │  │ NonConformity     │                   │            │
+              │  │ Flowchart         │   + Telemetry     │            │
+              │  └──┬───────────────┘     instrumentation│            │
+              └─────┼─────────────────────────────────────┼──────────┘
+                    │ grounding / chat queries             │ grounded prompts
+              ┌─────▼─────────────────────────────────────▼──────────┐
+              │         Foundry IQ knowledge layer                    │
+              │  Knowledge Source ─▶ Knowledge Base ─▶ synthesis      │
+              │  retrieval + citations [PROC-xxx]                     │
+              │                                                       │
+              │  Synthesis model (dual-mode):                         │
+              │   • FOUNDRY_MODE=local → Foundry Local (phi-3.5-mini, │
+              │     on-device, OpenAI-compatible) ← used in this demo │
+              │   • FOUNDRY_MODE=live  → Azure AI Search + AOAI       │
+              │   • FOUNDRY_MODE=mock  → deterministic offline        │
+              └────────┬──────────────────────────────────────────────┘
+                       │ knowledge
+        ┌──────────────┴──────────────┐
+        │ ISO 9001 processes           │   ┌─ M365 signals (synthetic) ─┐
+        │ (15 seeded + session-added)  │   │ Teams · Outlook · Planner · │
+        │ data/iso_processes.json      │   │ SharePoint                  │
+        │ dynamic in-memory store      │   │ stands in for Work IQ       │
+        └─────────────────────────────┘   └─────────────────────────────┘
 ```
 
 ## Quick start
@@ -175,12 +183,16 @@ kaizeniq/
 - Every agent operates **read-only** with explicit guardrails; proposed automation agents require human approval gates by specification.
 - The Compliance Guardrails Agent pattern bakes governance into the factory itself: no agent ships without an approved guardrail set.
 
-## Roadmap beyond the hackathon
+## Roadmap — completing the vision
 
-- Replace mock M365 signals with live **Work IQ** retrieval (REST/MCP).
+The ISO process knowledge is the foundation. The natural next step is to enrich it with the other two Microsoft IQ layers:
+
+- **Work IQ** — bring in real organizational context from Microsoft 365 work signals (collaboration patterns, where a task sits in the flow of work), instead of the synthetic signals used here.
+- **Fabric IQ** — add a semantic layer modeling the relationships between processes, roles, risks, and outcomes, so agents reason over business meaning, not just documents.
 - Instantiate trained agents directly in **Microsoft Foundry Agent Service** using the generated system prompts.
 - Expose the knowledge base's **MCP endpoint** so trained agents share one grounded brain.
-- **Fabric IQ** integration for KPI time-series instead of point-in-time snapshots.
+
+**A note on honesty:** Work IQ and Fabric IQ are not in this submission because integrating them requires paid Azure access that wasn't feasible for this hackathon. To demonstrate the intended Work IQ context layer, KaizenIQ uses synthetic Microsoft 365 signals (Teams, Outlook, Planner, SharePoint) that stand in for what Work IQ would provide in production — the data contract is isolated in one service, so swapping the mock JSON for real Work IQ calls is a single-file change. Likewise, the Foundry model runs on-device via Foundry Local because Azure OpenAI quota is unavailable on student subscriptions (a limitation Microsoft has publicly acknowledged for this hackathon).
 
 ---
 
