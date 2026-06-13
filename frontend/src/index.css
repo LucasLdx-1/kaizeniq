@@ -1,0 +1,254 @@
+/* ==========================================================================
+   KaizenIQ Design System
+   ==========================================================================
+   Concept: "audit ledger meets kaizen" — a precise, paper-toned quality-
+   management surface where the only saturated color is the hanko red seal
+   (改 = kai, "change/improve"), reserved for the brand mark and CRITICAL
+   severity. Deep pine green marks what is already implemented/healthy.
+
+   Type:  Zen Kaku Gothic New (display + UI) · IBM Plex Mono (IDs, KPIs, $)
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --paper: #faf9f6;        /* warm paper background */
+  --surface: #ffffff;      /* raised surfaces */
+  --ink: #1c1917;          /* primary text */
+  --stone: #78716c;        /* secondary text */
+  --line: #e7e2da;         /* hairline rules */
+  --hanko: #c0392b;        /* seal red — brand + CRITICAL only */
+  --hanko-soft: #fdf1ef;   /* red tint backgrounds */
+  --pine: #1e5945;         /* implemented / healthy */
+  --pine-soft: #edf5f1;
+  --amber: #b45309;        /* HIGH severity / warnings */
+  --amber-soft: #fdf6ec;
+  --slate-soft: #f1f0ed;   /* neutral chips */
+
+  --font-ui: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --radius: 6px;
+  --sidebar-w: 232px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ----- App shell ---------------------------------------------------- */
+.shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: var(--sidebar-w);
+  border-right: 1px solid var(--line);
+  padding: 28px 20px;
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; gap: 28px;
+  background: var(--paper);
+}
+
+/* Brand: hanko seal + wordmark — the signature element */
+.brand { display: flex; align-items: center; gap: 12px; }
+.seal {
+  width: 42px; height: 42px;
+  background: var(--hanko);
+  color: #fff;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  font-size: 22px; font-weight: 900;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.25);
+  transform: rotate(-3deg);          /* a stamped seal is never perfectly straight */
+}
+.brand h1 { font-size: 19px; font-weight: 900; letter-spacing: -0.02em; }
+.brand small { display: block; color: var(--stone); font-weight: 400; font-size: 11px; }
+
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav button {
+  all: unset; cursor: pointer;
+  padding: 9px 12px; border-radius: var(--radius);
+  font: 500 14px var(--font-ui); color: var(--stone);
+  display: flex; align-items: center; gap: 10px;
+}
+.nav button:hover { background: var(--slate-soft); color: var(--ink); }
+.nav button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.nav button.active { background: var(--ink); color: var(--paper); }
+.nav .count {
+  margin-left: auto; font: 600 11px var(--font-mono);
+  background: var(--hanko); color: #fff;
+  padding: 1px 7px; border-radius: 999px;
+}
+
+.sidebar .foot {
+  margin-top: auto; font-size: 11px; color: var(--stone);
+  border-top: 1px solid var(--line); padding-top: 14px;
+}
+.mode-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 600 11px var(--font-mono);
+  padding: 3px 8px; border-radius: 999px;
+  background: var(--slate-soft); color: var(--ink);
+  margin-bottom: 8px;
+}
+.mode-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pine); }
+
+/* ----- Main column --------------------------------------------------- */
+.main { flex: 1; padding: 32px 40px 64px; max-width: 1180px; }
+
+.page-head { margin-bottom: 26px; }
+.page-head .eyebrow {
+  font: 600 11px var(--font-mono); letter-spacing: .12em;
+  text-transform: uppercase; color: var(--hanko);
+}
+.page-head h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; margin-top: 2px; }
+.page-head p { color: var(--stone); max-width: 640px; margin-top: 4px; }
+
+/* ----- Ledger sections (hairline blocks, not shadow cards) ----------- */
+.ledger {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 22px;
+}
+.ledger > header {
+  padding: 14px 18px; border-bottom: 1px solid var(--line);
+  display: flex; align-items: baseline; gap: 10px;
+}
+.ledger > header h3 { font-size: 15px; font-weight: 700; }
+.ledger > header .sub { color: var(--stone); font-size: 12px; }
+.ledger .body { padding: 18px; }
+
+/* ----- Stat row ------------------------------------------------------ */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px;
+         background: var(--line); border: 1px solid var(--line); border-radius: var(--radius);
+         overflow: hidden; margin-bottom: 22px; }
+.stat { background: var(--surface); padding: 16px 18px; }
+.stat .label { font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: .08em; }
+.stat .value { font: 600 26px var(--font-mono); margin-top: 4px; }
+.stat .value.red { color: var(--hanko); }
+.stat .value.green { color: var(--pine); }
+.stat .hint { font-size: 11px; color: var(--stone); margin-top: 2px; }
+
+/* ----- Tables -------------------------------------------------------- */
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left; font: 600 11px var(--font-ui);
+  text-transform: uppercase; letter-spacing: .08em; color: var(--stone);
+  padding: 10px 18px; border-bottom: 1px solid var(--line);
+}
+td { padding: 12px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--paper); }
+.mono { font-family: var(--font-mono); font-size: 12.5px; }
+
+/* ----- Badges --------------------------------------------------------- */
+.badge {
+  display: inline-flex; align-items: center;
+  font: 600 11px var(--font-mono);
+  padding: 2px 9px; border-radius: 999px; white-space: nowrap;
+}
+.badge.critical { background: var(--hanko); color: #fff; }
+.badge.high     { background: var(--amber-soft); color: var(--amber); border: 1px solid var(--amber); }
+.badge.medium   { background: var(--slate-soft); color: var(--stone); border: 1px solid var(--line); }
+.badge.implemented { background: var(--pine); color: #fff; }
+.badge.proposed    { background: var(--surface); color: var(--ink); border: 1.5px dashed var(--stone); }
+.badge.tier { background: var(--slate-soft); color: var(--stone); }
+.badge.drift-critical { background: var(--hanko-soft); color: var(--hanko); border: 1px solid var(--hanko); }
+.badge.drift-significant { background: var(--amber-soft); color: var(--amber); border: 1px solid var(--amber); }
+.badge.drift-minor { background: var(--slate-soft); color: var(--stone); }
+.badge.aligned { background: var(--pine-soft); color: var(--pine); border: 1px solid var(--pine); }
+
+/* ----- Buttons -------------------------------------------------------- */
+.btn {
+  all: unset; cursor: pointer;
+  font: 600 13px var(--font-ui);
+  padding: 8px 14px; border-radius: var(--radius);
+  background: var(--ink); color: var(--paper);
+}
+.btn:hover { opacity: .88; }
+.btn:focus-visible { outline: 2px solid var(--hanko); outline-offset: 2px; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn.ghost:hover { border-color: var(--ink); opacity: 1; }
+.btn:disabled { opacity: .45; cursor: default; }
+
+/* ----- Agent grid ------------------------------------------------------ */
+.agent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+.agent-card {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); padding: 16px; display: flex; flex-direction: column; gap: 10px;
+}
+.agent-card.implemented { border-left: 3px solid var(--pine); }
+.agent-card.proposed { border-left: 3px solid var(--stone); border-left-style: dashed; }
+.agent-card h4 { font-size: 15px; font-weight: 700; }
+.agent-card .objective { color: var(--stone); font-size: 13px; flex: 1; }
+.agent-card .meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.agent-card .impact { font: 600 13px var(--font-mono); color: var(--pine); margin-left: auto; }
+
+/* ----- Train modal (system prompt viewer) ------------------------------ */
+.overlay {
+  position: fixed; inset: 0; background: rgba(28,25,23,.45);
+  display: grid; place-items: center; padding: 24px; z-index: 50;
+}
+.modal {
+  background: var(--surface); border-radius: 10px; max-width: 760px; width: 100%;
+  max-height: 86vh; display: flex; flex-direction: column; border: 1px solid var(--line);
+}
+.modal header { padding: 16px 20px; border-bottom: 1px solid var(--line);
+                display: flex; justify-content: space-between; align-items: center; }
+.modal header h3 { font-size: 16px; font-weight: 700; }
+.modal .prompt {
+  padding: 18px 20px; overflow: auto; white-space: pre-wrap;
+  font: 12.5px/1.6 var(--font-mono); background: var(--paper);
+}
+.modal footer { padding: 12px 20px; border-top: 1px solid var(--line);
+                font-size: 12px; color: var(--stone); }
+
+/* ----- Evidence list ---------------------------------------------------- */
+.evidence { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.evidence li { font-size: 12.5px; color: var(--stone); padding-left: 14px; position: relative; }
+.evidence li::before { content: "▸"; position: absolute; left: 0; color: var(--hanko); }
+
+/* ----- Mermaid container ------------------------------------------------- */
+.flowchart-box { background: var(--surface); border: 1px solid var(--line);
+                 border-radius: var(--radius); padding: 20px; overflow: auto; }
+.flowchart-box svg { max-width: 100%; height: auto; }
+
+/* ----- Process selector --------------------------------------------------- */
+.proc-list { display: flex; flex-direction: column; }
+.proc-row {
+  all: unset; cursor: pointer; display: flex; gap: 12px; align-items: baseline;
+  padding: 11px 18px; border-bottom: 1px solid var(--line);
+}
+.proc-row:hover { background: var(--paper); }
+.proc-row.active { background: var(--ink); color: var(--paper); }
+.proc-row.active .mono, .proc-row.active small { color: var(--paper); opacity: .8; }
+.proc-row small { color: var(--stone); margin-left: auto; font-size: 11px; }
+
+/* ----- Roadmap phases ------------------------------------------------------ */
+.phase { display: grid; grid-template-columns: 110px 1fr; gap: 16px;
+         padding: 14px 0; border-bottom: 1px solid var(--line); }
+.phase:last-child { border-bottom: none; }
+.phase .when { font: 600 12px var(--font-mono); color: var(--hanko); }
+.phase h4 { font-size: 14px; font-weight: 700; }
+.phase p { color: var(--stone); font-size: 12.5px; margin-top: 2px; }
+.phase .agents { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ----- Misc ----------------------------------------------------------------- */
+.loading { padding: 80px; text-align: center; color: var(--stone); }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 980px) {
+  .two-col { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

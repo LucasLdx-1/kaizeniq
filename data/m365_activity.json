@@ -1,0 +1,170 @@
+{
+  "_comment": "Synthetic Microsoft 365 activity data for the KaizenIQ demo. Simulates the organizational signals that Work IQ would surface in production (Teams, Outlook, Planner, SharePoint). All names, emails and patterns are fictional.",
+  "snapshot_date": "2026-06-11",
+  "period_covered": "2026-03-01 to 2026-06-11",
+
+  "teams_activity": {
+    "channels": [
+      {
+        "channel": "sales-team",
+        "linked_process": "PROC-001",
+        "messages_per_week_avg": 184,
+        "active_members": 12,
+        "notable_patterns": [
+          "Recurring thread every Monday: manual consolidation of weekly quotes into Excel before pricing approval",
+          "Frequent question pattern (3-4x/week): 'where is the latest pricing table?' — suggests document findability issue",
+          "Escalation messages to CFO for pricing approval show average 2.1 day wait"
+        ]
+      },
+      {
+        "channel": "production-planning",
+        "linked_process": "PROC-002",
+        "messages_per_week_avg": 233,
+        "active_members": 9,
+        "notable_patterns": [
+          "Daily 7:30am thread: supervisors manually report line status, copied by planner into schedule spreadsheet",
+          "Rescheduling discussions average 14 messages and 3 participants per event",
+          "Material shortage alerts arrive via chat instead of system notification"
+        ]
+      },
+      {
+        "channel": "quality-assurance",
+        "linked_process": "PROC-004",
+        "messages_per_week_avg": 97,
+        "active_members": 7,
+        "notable_patterns": [
+          "CAPA deadline reminders posted manually by QM every Friday",
+          "Root cause analysis sessions scheduled via chat ping-pong, average 9 messages to find common slot",
+          "Recurring confusion about which form version to use (FRM-QA-001 v4 vs v5)"
+        ]
+      },
+      {
+        "channel": "customer-service",
+        "linked_process": "PROC-008",
+        "messages_per_week_avg": 156,
+        "active_members": 8,
+        "notable_patterns": [
+          "Complaint triage happens in chat before registration — average 4.5h delay before formal logging",
+          "Status requests from sales about open complaints: ~11 per week, each answered manually"
+        ]
+      },
+      {
+        "channel": "maintenance",
+        "linked_process": "PROC-010",
+        "messages_per_week_avg": 64,
+        "active_members": 6,
+        "notable_patterns": [
+          "Calibration due-date questions answered by supervisor from memory or personal spreadsheet",
+          "Photos of equipment labels shared in chat as informal calibration evidence"
+        ]
+      }
+    ],
+    "meetings": {
+      "recurring_meetings_total": 23,
+      "avg_weekly_meeting_hours_per_manager": 14.5,
+      "meetings_flagged_could_be_async": [
+        {"title": "Weekly quote status review", "duration_min": 60, "attendees": 8, "linked_process": "PROC-001", "reason": "Status reading only, no decisions in last 6 occurrences"},
+        {"title": "Daily line status standup", "duration_min": 30, "attendees": 11, "linked_process": "PROC-002", "reason": "Data could come from system dashboard"},
+        {"title": "Monthly document control sync", "duration_min": 45, "attendees": 6, "linked_process": "PROC-006", "reason": "Agenda is reading the overdue document list aloud"}
+      ]
+    }
+  },
+
+  "outlook_patterns": {
+    "org_email_volume_per_day_avg": 1840,
+    "repetitive_email_workflows": [
+      {
+        "pattern": "Weekly KPI compilation email",
+        "linked_process": "PROC-011",
+        "frequency": "Weekly (Fridays)",
+        "description": "QM manually collects KPI numbers from 6 department heads via email, consolidates into PowerPoint for management review pre-read.",
+        "estimated_hours_per_week": 4.0,
+        "people_involved": 7
+      },
+      {
+        "pattern": "Supplier certificate chasing",
+        "linked_process": "PROC-009",
+        "frequency": "Daily",
+        "description": "Procurement sends individual reminder emails to suppliers with expired/expiring certificates. Tracked in personal Excel file.",
+        "estimated_hours_per_week": 3.5,
+        "people_involved": 2
+      },
+      {
+        "pattern": "Calibration due notifications",
+        "linked_process": "PROC-010",
+        "frequency": "Weekly",
+        "description": "Maintenance supervisor emails each equipment owner about upcoming calibrations, copying lab partner. No automation.",
+        "estimated_hours_per_week": 2.0,
+        "people_involved": 4
+      },
+      {
+        "pattern": "Complaint status updates to sales",
+        "linked_process": "PROC-008",
+        "frequency": "Daily",
+        "description": "Customer service answers individual emails from account managers asking about complaint status.",
+        "estimated_hours_per_week": 5.5,
+        "people_involved": 8
+      },
+      {
+        "pattern": "Document approval reminders",
+        "linked_process": "PROC-006",
+        "frequency": "Weekly",
+        "description": "QA assistant manually reminds approvers about documents pending signature for more than 7 days.",
+        "estimated_hours_per_week": 1.5,
+        "people_involved": 3
+      },
+      {
+        "pattern": "Training completion chasing",
+        "linked_process": "PROC-005",
+        "frequency": "Weekly",
+        "description": "HR emails managers lists of team members with overdue mandatory training, compiled manually from LMS export.",
+        "estimated_hours_per_week": 2.5,
+        "people_involved": 3
+      }
+    ],
+    "document_mentions": [
+      {"document": "WI-SAL-003", "linked_process": "PROC-001", "mentions_last_90d": 31, "note": "Frequently attached as PDF v2.8 although current controlled version is 3.2 — stale copies circulating"},
+      {"document": "FRM-QA-001", "linked_process": "PROC-004", "mentions_last_90d": 24, "note": "Two versions (v4/v5) both in active circulation in email threads"},
+      {"document": "PLN-MNT-001", "linked_process": "PROC-010", "mentions_last_90d": 9, "note": "Personal copy on supervisor's OneDrive referenced more often than controlled version"},
+      {"document": "MTX-HR-001", "linked_process": "PROC-005", "mentions_last_90d": 6, "note": "Competence matrix last referenced version dates from 2023"}
+    ]
+  },
+
+  "planner_tasks": {
+    "boards_tracked": 8,
+    "total_open_tasks": 247,
+    "overdue_tasks": 41,
+    "overdue_by_process": [
+      {"linked_process": "PROC-004", "board": "CAPA Tracker", "overdue": 13, "oldest_overdue_days": 94, "note": "Corrective actions waiting effectiveness verification"},
+      {"linked_process": "PROC-007", "board": "Internal Audit 2026", "overdue": 9, "oldest_overdue_days": 67, "note": "Audit findings without assigned closure evidence"},
+      {"linked_process": "PROC-006", "board": "Document Reviews", "overdue": 14, "oldest_overdue_days": 120, "note": "Documents past scheduled review date"},
+      {"linked_process": "PROC-013", "board": "Risk Treatments", "overdue": 5, "oldest_overdue_days": 88, "note": "High-risk treatment plans without progress update"}
+    ],
+    "completion_rate_90d": 0.74
+  },
+
+  "sharepoint_signals": {
+    "controlled_library": "QMS-Controlled-Documents",
+    "version_events_last_90d": 38,
+    "stale_document_alerts": [
+      {"document_id": "MTX-HR-001", "linked_process": "PROC-005", "last_modified": "2023-08-19", "days_since_update": 1027, "risk": "Competence matrix does not reflect 3 new roles created in 2025"},
+      {"document_id": "WI-LOG-002", "linked_process": "PROC-015", "last_modified": "2023-12-01", "days_since_update": 923, "risk": "Warehouse instruction predates new WMS rollout (2025)"},
+      {"document_id": "FRM-DOC-002", "linked_process": "PROC-006", "last_modified": "2024-02-07", "days_since_update": 855, "risk": "Change request form does not include new approval field required by policy"},
+      {"document_id": "MTX-PRO-001", "linked_process": "PROC-009", "last_modified": "2024-05-22", "days_since_update": 750, "risk": "Supplier evaluation matrix missing cybersecurity criteria added to policy in 2025"},
+      {"document_id": "WI-QC-004", "linked_process": "PROC-003", "last_modified": "2024-11-28", "days_since_update": 560, "risk": "Inspection instruction references discontinued measurement device"}
+    ],
+    "access_anomalies": [
+      {"event": "Uncontrolled copy detected", "detail": "PDF export of WI-SAL-003 v2.8 stored in Sales shared folder, 17 downloads last 90 days", "linked_process": "PROC-001", "severity": "MEDIUM"},
+      {"event": "Broken permission inheritance", "detail": "Folder 'Audit-2026-WorkingPapers' shared with 'Everyone' group", "linked_process": "PROC-007", "severity": "HIGH"}
+    ]
+  },
+
+  "power_bi_metrics": {
+    "qms_health_score": 0.71,
+    "process_compliance_avg": 0.82,
+    "kpis_on_target_ratio": 0.43,
+    "trend_90d": "declining",
+    "worst_performing_processes": ["PROC-004", "PROC-007", "PROC-006"],
+    "best_performing_processes": ["PROC-012", "PROC-003"]
+  }
+}

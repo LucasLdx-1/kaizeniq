@@ -1,0 +1,19 @@
+# KaizenIQ backend dependencies
+# Core API
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.9.0
+python-dotenv==1.0.1
+
+# Microsoft Foundry IQ (live mode) — versions pinned by the official
+# IQ Series cookbooks: https://github.com/microsoft/iq-series
+# These are OPTIONAL for mock mode; required only when FOUNDRY_MODE=live.
+azure-search-documents==12.1.0b1
+azure-identity==1.17.1
+azure-ai-projects
+
+# Foundry Local (FOUNDRY_MODE=local) — real Microsoft Foundry model on-device.
+# Install Foundry Local separately (winget install Microsoft.FoundryLocal),
+# then: foundry model run phi-3.5-mini
+foundry-local-sdk
+openai

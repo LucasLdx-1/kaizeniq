@@ -1,0 +1,454 @@
+{
+  "organization": {
+    "name": "Meridian Industries Ltd.",
+    "description": "Fictional mid-size manufacturing company used for demonstration purposes. All data in this file is synthetic and generated for the KaizenIQ hackathon demo.",
+    "iso_certification": "ISO 9001:2015",
+    "certified_since": "2019-03-12",
+    "last_audit": "2025-11-20",
+    "next_audit": "2026-11-18",
+    "employees": 420,
+    "sites": 2
+  },
+  "processes": [
+    {
+      "id": "PROC-001",
+      "name": "Sales & Contract Review",
+      "macro_process": "Customer-Facing Operations",
+      "iso_clause": "8.2 - Requirements for products and services",
+      "description": "End-to-end sales workflow from lead qualification through contract review and order confirmation. Includes feasibility analysis and pricing approval.",
+      "owner": "Sales Director",
+      "responsible_team": "Sales",
+      "inputs": ["Customer inquiry", "Product catalog", "Pricing tables", "Capacity forecast"],
+      "outputs": ["Reviewed contract", "Confirmed order", "Customer requirements record"],
+      "steps": [
+        "Receive and log customer inquiry",
+        "Qualify lead and assess feasibility",
+        "Prepare quotation with engineering input",
+        "Internal pricing approval (above threshold requires CFO sign-off)",
+        "Contract review meeting",
+        "Order confirmation and handoff to planning"
+      ],
+      "kpis": [
+        {"name": "Quote turnaround time", "target": "3 business days", "current": "5.2 business days"},
+        {"name": "Contract review errors", "target": "< 2%", "current": "4.1%"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "DAILY",
+      "last_updated": "2025-04-10",
+      "updated_by": "carla.mendes@meridian-demo.com",
+      "document_version": "3.2",
+      "related_documents": ["FRM-SAL-001", "WI-SAL-003", "POL-PRC-001"]
+    },
+    {
+      "id": "PROC-002",
+      "name": "Production Planning & Scheduling",
+      "macro_process": "Operations",
+      "iso_clause": "8.1 - Operational planning and control",
+      "description": "Weekly and daily production planning based on confirmed orders, capacity, and material availability. Generates the master production schedule.",
+      "owner": "Operations Manager",
+      "responsible_team": "Planning",
+      "inputs": ["Confirmed orders", "Inventory levels", "Capacity data", "Maintenance calendar"],
+      "outputs": ["Master production schedule", "Material requirements plan"],
+      "steps": [
+        "Consolidate confirmed orders",
+        "Check material availability (MRP run)",
+        "Verify line capacity and maintenance windows",
+        "Draft weekly schedule",
+        "Review meeting with production supervisors",
+        "Publish schedule and notify teams"
+      ],
+      "kpis": [
+        {"name": "Schedule adherence", "target": "> 92%", "current": "87%"},
+        {"name": "Rescheduling events per week", "target": "< 3", "current": "6"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "WEEKLY",
+      "last_updated": "2025-09-02",
+      "updated_by": "joao.ferraz@meridian-demo.com",
+      "document_version": "4.0",
+      "related_documents": ["WI-PLN-001", "FRM-PLN-002"]
+    },
+    {
+      "id": "PROC-003",
+      "name": "Incoming Material Inspection",
+      "macro_process": "Quality Assurance",
+      "iso_clause": "8.4 - Control of externally provided processes, products and services",
+      "description": "Inspection and verification of incoming raw materials and components against purchase specifications before release to inventory.",
+      "owner": "Quality Manager",
+      "responsible_team": "Quality Control",
+      "inputs": ["Delivery note", "Purchase order", "Material specification", "Supplier certificate"],
+      "outputs": ["Inspection record", "Release/rejection decision", "Supplier nonconformity report (if applicable)"],
+      "steps": [
+        "Receive material and match against purchase order",
+        "Sample according to inspection plan",
+        "Perform dimensional and visual checks",
+        "Verify supplier certificates",
+        "Record results in QC system",
+        "Release to inventory or initiate rejection workflow"
+      ],
+      "kpis": [
+        {"name": "Inspection lead time", "target": "< 24h", "current": "31h"},
+        {"name": "Supplier lot rejection rate", "target": "< 1.5%", "current": "2.3%"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "DAILY",
+      "last_updated": "2024-11-28",
+      "updated_by": "renata.lopes@meridian-demo.com",
+      "document_version": "2.7",
+      "related_documents": ["WI-QC-004", "FRM-QC-010", "PLN-QC-001"]
+    },
+    {
+      "id": "PROC-004",
+      "name": "Nonconformity & Corrective Action (CAPA)",
+      "macro_process": "Quality Assurance",
+      "iso_clause": "10.2 - Nonconformity and corrective action",
+      "description": "Registration, containment, root cause analysis, and corrective action for internal and external nonconformities.",
+      "owner": "Quality Manager",
+      "responsible_team": "Quality Assurance",
+      "inputs": ["Nonconformity report", "Customer complaint", "Audit finding"],
+      "outputs": ["Root cause analysis", "Corrective action plan", "Effectiveness verification record"],
+      "steps": [
+        "Register nonconformity in QMS",
+        "Immediate containment action",
+        "Root cause analysis (5-Why / Ishikawa)",
+        "Define corrective action plan with owner and deadline",
+        "Implement actions",
+        "Verify effectiveness after 30/60/90 days",
+        "Close record with QM approval"
+      ],
+      "kpis": [
+        {"name": "Average closure time", "target": "< 45 days", "current": "68 days"},
+        {"name": "Recurring nonconformities", "target": "< 10%", "current": "18%"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "ON_DEMAND",
+      "last_updated": "2025-01-15",
+      "updated_by": "renata.lopes@meridian-demo.com",
+      "document_version": "5.1",
+      "related_documents": ["FRM-QA-001", "WI-QA-002"]
+    },
+    {
+      "id": "PROC-005",
+      "name": "Employee Onboarding & Training",
+      "macro_process": "People & Competence",
+      "iso_clause": "7.2 - Competence",
+      "description": "Structured onboarding for new hires including mandatory safety training, role-specific competence development, and training effectiveness evaluation.",
+      "owner": "HR Manager",
+      "responsible_team": "Human Resources",
+      "inputs": ["Signed contract", "Job description", "Competence matrix", "Training catalog"],
+      "outputs": ["Completed onboarding checklist", "Training records", "Competence evaluation"],
+      "steps": [
+        "Prepare workstation and system access",
+        "Day-1 orientation and safety induction",
+        "Assign role-specific training plan from competence matrix",
+        "Mentor assignment for first 60 days",
+        "30/60/90 day check-ins",
+        "Competence evaluation and sign-off"
+      ],
+      "kpis": [
+        {"name": "Onboarding completion within 90 days", "target": "100%", "current": "81%"},
+        {"name": "Training effectiveness score", "target": "> 4.0/5", "current": "3.6/5"}
+      ],
+      "criticality": "MEDIUM",
+      "frequency": "ON_DEMAND",
+      "last_updated": "2023-08-19",
+      "updated_by": "paulo.teixeira@meridian-demo.com",
+      "document_version": "1.4",
+      "related_documents": ["FRM-HR-005", "MTX-HR-001"]
+    },
+    {
+      "id": "PROC-006",
+      "name": "Document Control",
+      "macro_process": "QMS Governance",
+      "iso_clause": "7.5 - Documented information",
+      "description": "Creation, review, approval, distribution, and obsolescence control of all QMS documents. Ensures only current versions are in use.",
+      "owner": "Quality Manager",
+      "responsible_team": "Quality Assurance",
+      "inputs": ["Document change request", "Draft document"],
+      "outputs": ["Approved controlled document", "Updated master list", "Obsolete document archive"],
+      "steps": [
+        "Submit document change request",
+        "Draft or revise document",
+        "Technical review by process owner",
+        "QM approval and version increment",
+        "Publish to SharePoint controlled library",
+        "Archive obsolete version",
+        "Notify affected teams"
+      ],
+      "kpis": [
+        {"name": "Documents past review date", "target": "0", "current": "14"},
+        {"name": "Average approval cycle", "target": "< 10 days", "current": "22 days"}
+      ],
+      "criticality": "MEDIUM",
+      "frequency": "ON_DEMAND",
+      "last_updated": "2024-02-07",
+      "updated_by": "renata.lopes@meridian-demo.com",
+      "document_version": "3.0",
+      "related_documents": ["POL-DOC-001", "FRM-DOC-002"]
+    },
+    {
+      "id": "PROC-007",
+      "name": "Internal Audit Program",
+      "macro_process": "QMS Governance",
+      "iso_clause": "9.2 - Internal audit",
+      "description": "Annual internal audit planning and execution covering all QMS processes, with qualified internal auditors and documented findings.",
+      "owner": "Quality Manager",
+      "responsible_team": "Quality Assurance",
+      "inputs": ["Annual audit program", "Previous findings", "Process risk ratings"],
+      "outputs": ["Audit reports", "Findings register", "Improvement opportunities"],
+      "steps": [
+        "Define annual audit program based on risk",
+        "Assign qualified auditors (independence check)",
+        "Prepare audit checklist",
+        "Conduct audit and record evidence",
+        "Issue report with findings classification",
+        "Feed findings into CAPA process",
+        "Track closure"
+      ],
+      "kpis": [
+        {"name": "Audit program completion", "target": "100%", "current": "75%"},
+        {"name": "Findings closed on time", "target": "> 90%", "current": "62%"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "MONTHLY",
+      "last_updated": "2025-06-30",
+      "updated_by": "renata.lopes@meridian-demo.com",
+      "document_version": "2.2",
+      "related_documents": ["PRG-AUD-2026", "FRM-AUD-001"]
+    },
+    {
+      "id": "PROC-008",
+      "name": "Customer Complaint Handling",
+      "macro_process": "Customer-Facing Operations",
+      "iso_clause": "9.1.2 - Customer satisfaction",
+      "description": "Reception, investigation, and resolution of customer complaints with defined response time commitments and escalation rules.",
+      "owner": "Customer Service Lead",
+      "responsible_team": "Customer Service",
+      "inputs": ["Customer complaint (email/phone/portal)", "Order history", "Product records"],
+      "outputs": ["Complaint record", "Customer response", "Nonconformity report (if confirmed)"],
+      "steps": [
+        "Register complaint within 24h",
+        "Acknowledge to customer with tracking number",
+        "Investigate with production/quality",
+        "Define resolution (replacement, credit, repair)",
+        "Communicate resolution to customer",
+        "Link to CAPA if systemic",
+        "Close with customer satisfaction check"
+      ],
+      "kpis": [
+        {"name": "First response time", "target": "< 24h", "current": "26h"},
+        {"name": "Resolution within SLA", "target": "> 85%", "current": "71%"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "DAILY",
+      "last_updated": "2025-10-11",
+      "updated_by": "carla.mendes@meridian-demo.com",
+      "document_version": "2.9",
+      "related_documents": ["WI-CS-001", "FRM-CS-003"]
+    },
+    {
+      "id": "PROC-009",
+      "name": "Supplier Evaluation & Selection",
+      "macro_process": "Procurement",
+      "iso_clause": "8.4 - Control of externally provided processes, products and services",
+      "description": "Qualification of new suppliers and periodic re-evaluation of approved suppliers based on quality, delivery, and commercial performance.",
+      "owner": "Procurement Manager",
+      "responsible_team": "Procurement",
+      "inputs": ["Supplier application", "Quality certificates", "Performance data"],
+      "outputs": ["Approved supplier list entry", "Evaluation scorecard", "Development plan (if conditional)"],
+      "steps": [
+        "Receive supplier application and documentation",
+        "Desk review of certificates and references",
+        "On-site or remote audit for critical categories",
+        "Score against evaluation matrix",
+        "Approve / conditionally approve / reject",
+        "Annual re-evaluation with performance data"
+      ],
+      "kpis": [
+        {"name": "Suppliers re-evaluated on schedule", "target": "100%", "current": "68%"},
+        {"name": "Critical suppliers with valid audit", "target": "100%", "current": "84%"}
+      ],
+      "criticality": "MEDIUM",
+      "frequency": "QUARTERLY",
+      "last_updated": "2024-05-22",
+      "updated_by": "marcio.alves@meridian-demo.com",
+      "document_version": "2.1",
+      "related_documents": ["MTX-PRO-001", "FRM-PRO-007"]
+    },
+    {
+      "id": "PROC-010",
+      "name": "Equipment Calibration & Maintenance",
+      "macro_process": "Infrastructure",
+      "iso_clause": "7.1.5 - Monitoring and measuring resources",
+      "description": "Scheduled calibration of measurement equipment and preventive maintenance of production assets to ensure measurement validity and availability.",
+      "owner": "Maintenance Supervisor",
+      "responsible_team": "Maintenance",
+      "inputs": ["Calibration schedule", "Equipment register", "Manufacturer specifications"],
+      "outputs": ["Calibration certificates", "Maintenance records", "Out-of-tolerance investigation (if needed)"],
+      "steps": [
+        "Generate monthly calibration due list",
+        "Send equipment to lab or perform in-house calibration",
+        "Record results and apply calibration label",
+        "Investigate out-of-tolerance findings (impact on product)",
+        "Execute preventive maintenance per plan",
+        "Update equipment register"
+      ],
+      "kpis": [
+        {"name": "Calibrations overdue", "target": "0", "current": "7"},
+        {"name": "Preventive maintenance compliance", "target": "> 95%", "current": "88%"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "MONTHLY",
+      "last_updated": "2025-03-18",
+      "updated_by": "diego.santanna@meridian-demo.com",
+      "document_version": "3.5",
+      "related_documents": ["PLN-MNT-001", "REG-MNT-002"]
+    },
+    {
+      "id": "PROC-011",
+      "name": "Management Review",
+      "macro_process": "QMS Governance",
+      "iso_clause": "9.3 - Management review",
+      "description": "Quarterly leadership review of QMS performance, covering all required inputs: audit results, customer feedback, process performance, and improvement actions.",
+      "owner": "CEO",
+      "responsible_team": "Executive Team",
+      "inputs": ["KPI dashboards", "Audit results", "Customer satisfaction data", "CAPA status", "Resource needs"],
+      "outputs": ["Meeting minutes", "Decisions and actions", "Resource allocations"],
+      "steps": [
+        "Compile review input package (QM)",
+        "Distribute pre-read 5 days before meeting",
+        "Conduct review meeting with full agenda",
+        "Record decisions and assign actions",
+        "Publish minutes",
+        "Track actions to closure"
+      ],
+      "kpis": [
+        {"name": "Reviews held per year", "target": "4", "current": "3"},
+        {"name": "Actions closed before next review", "target": "> 80%", "current": "55%"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "QUARTERLY",
+      "last_updated": "2025-07-09",
+      "updated_by": "renata.lopes@meridian-demo.com",
+      "document_version": "1.8",
+      "related_documents": ["AGD-MR-001", "FRM-MR-002"]
+    },
+    {
+      "id": "PROC-012",
+      "name": "Final Product Inspection & Release",
+      "macro_process": "Quality Assurance",
+      "iso_clause": "8.6 - Release of products and services",
+      "description": "Final inspection against customer specification and internal standards before product release and shipment authorization.",
+      "owner": "Quality Manager",
+      "responsible_team": "Quality Control",
+      "inputs": ["Finished product", "Customer specification", "Production records"],
+      "outputs": ["Release certificate", "Inspection record", "Hold/rework order (if failed)"],
+      "steps": [
+        "Sample finished lot per inspection plan",
+        "Perform final dimensional/functional tests",
+        "Review production records for completeness",
+        "Approve release or initiate hold",
+        "Issue certificate of conformity",
+        "Authorize shipment"
+      ],
+      "kpis": [
+        {"name": "First-pass yield", "target": "> 97%", "current": "94.5%"},
+        {"name": "Release documentation errors", "target": "< 0.5%", "current": "1.2%"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "DAILY",
+      "last_updated": "2025-08-25",
+      "updated_by": "renata.lopes@meridian-demo.com",
+      "document_version": "4.2",
+      "related_documents": ["PLN-QC-002", "FRM-QC-015"]
+    },
+    {
+      "id": "PROC-013",
+      "name": "Risk & Opportunity Management",
+      "macro_process": "QMS Governance",
+      "iso_clause": "6.1 - Actions to address risks and opportunities",
+      "description": "Identification, assessment, and treatment of risks and opportunities affecting QMS objectives, reviewed semi-annually.",
+      "owner": "Quality Manager",
+      "responsible_team": "Cross-functional",
+      "inputs": ["Context analysis", "Stakeholder requirements", "Process performance data"],
+      "outputs": ["Risk register", "Treatment plans", "Opportunity initiatives"],
+      "steps": [
+        "Workshop to identify risks/opportunities per process",
+        "Score probability and impact",
+        "Define treatment for high risks",
+        "Assign owners and deadlines",
+        "Semi-annual review and update",
+        "Report to management review"
+      ],
+      "kpis": [
+        {"name": "High risks with active treatment", "target": "100%", "current": "73%"},
+        {"name": "Register reviews per year", "target": "2", "current": "1"}
+      ],
+      "criticality": "MEDIUM",
+      "frequency": "SEMIANNUAL",
+      "last_updated": "2024-09-14",
+      "updated_by": "renata.lopes@meridian-demo.com",
+      "document_version": "1.3",
+      "related_documents": ["REG-RSK-001", "MTX-RSK-001"]
+    },
+    {
+      "id": "PROC-014",
+      "name": "Design & Development Control",
+      "macro_process": "Engineering",
+      "iso_clause": "8.3 - Design and development of products and services",
+      "description": "Stage-gated design process for new products including design inputs, reviews, verification, validation, and change control.",
+      "owner": "Engineering Manager",
+      "responsible_team": "Engineering",
+      "inputs": ["Customer requirements", "Regulatory requirements", "Feasibility study"],
+      "outputs": ["Design outputs (drawings, BOM)", "Verification records", "Validation report", "Design file"],
+      "steps": [
+        "Capture and review design inputs",
+        "Concept design and gate 1 review",
+        "Detailed design and gate 2 review",
+        "Design verification (calculations, prototypes)",
+        "Design validation (pilot run, customer approval)",
+        "Release to production with full design file",
+        "Manage design changes via ECN process"
+      ],
+      "kpis": [
+        {"name": "Gate reviews held as planned", "target": "100%", "current": "82%"},
+        {"name": "Post-release design changes", "target": "< 5 per project", "current": "9 per project"}
+      ],
+      "criticality": "HIGH",
+      "frequency": "PER_PROJECT",
+      "last_updated": "2025-02-03",
+      "updated_by": "fernanda.kruger@meridian-demo.com",
+      "document_version": "2.6",
+      "related_documents": ["WI-ENG-001", "FRM-ENG-008", "FRM-ENG-009"]
+    },
+    {
+      "id": "PROC-015",
+      "name": "Warehouse & Inventory Control",
+      "macro_process": "Logistics",
+      "iso_clause": "8.5.4 - Preservation",
+      "description": "Storage, identification, FIFO control, and cycle counting of raw materials, WIP, and finished goods to preserve product conformity.",
+      "owner": "Logistics Supervisor",
+      "responsible_team": "Warehouse",
+      "inputs": ["Released materials", "Storage requirements", "Picking lists"],
+      "outputs": ["Accurate inventory records", "Cycle count reports", "FIFO compliance"],
+      "steps": [
+        "Receive released material with identification",
+        "Store per location and preservation rules",
+        "Execute FIFO on picking",
+        "Weekly cycle counts by ABC class",
+        "Investigate discrepancies above threshold",
+        "Quarterly full reconciliation"
+      ],
+      "kpis": [
+        {"name": "Inventory accuracy", "target": "> 98%", "current": "95.1%"},
+        {"name": "FIFO violations per month", "target": "0", "current": "4"}
+      ],
+      "criticality": "MEDIUM",
+      "frequency": "DAILY",
+      "last_updated": "2023-12-01",
+      "updated_by": "diego.santanna@meridian-demo.com",
+      "document_version": "1.9",
+      "related_documents": ["WI-LOG-002", "FRM-LOG-004"]
+    }
+  ]
+}
