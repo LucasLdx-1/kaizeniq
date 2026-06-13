@@ -116,6 +116,9 @@ The simulated Microsoft 365 signals (Teams, Outlook, Planner, SharePoint) repres
 
 **Prerequisites:** Python 3.11+, Node 18+.
 
+> For a detailed walkthrough — including the full **Foundry Local** setup and a
+> troubleshooting table — see **[SETUP.md](SETUP.md)**.
+
 ```bash
 # 1. Backend (runs in mock mode out of the box — no Azure needed)
 cd backend
