@@ -8,6 +8,8 @@
 
 *Microsoft Agents League Hackathon 2026 · Reasoning Agents track (Microsoft Foundry)*
 
+**▶️ [Watch the 5-minute demo video](https://www.youtube.com/watch?v=qv4qW0VZBVI)**
+
 </div>
 
 ---
@@ -68,48 +70,68 @@ The simulated Microsoft 365 signals (Teams, Outlook, Planner, SharePoint) repres
 
 ## Architecture
 
-```
-              ┌──────────────────────────────────────────────────────┐
-              │                 KaizenIQ Portal (React)               │
-              │  Dashboard · Talk to Agents · Add Process · Company    │
-              │  Map · Agent Portfolio · Non-Conformities · Telemetry  │
-              └────────────────────────┬─────────────────────────────┘
-                                       │ REST
-              ┌────────────────────────▼─────────────────────────────┐
-              │                   FastAPI backend                     │
-              │  ┌─────────────────────────────────────────────────┐ │
-              │  │              Master Orchestrator                │ │
-              │  │     7-step reasoning pipeline + chat + train    │ │
-              │  └──┬───────────────────────────────────────┬──────┘ │
-              │     │                                       │        │
-              │  ┌──▼───────────────┐          ┌────────────▼──────┐ │
-              │  │ Diagnostic agents │          │   Agent Factory   │ │
-              │  │ CurrentState      │  ───────▶│  agent portfolio  │ │
-              │  │ RepetitiveWork    │          │  + train_agent()  │ │
-              │  │ Bottleneck        │          └────────┬──────────┘ │
-              │  │ NonConformity     │                   │            │
-              │  │ Flowchart         │   + Telemetry     │            │
-              │  └──┬───────────────┘     instrumentation│            │
-              └─────┼─────────────────────────────────────┼──────────┘
-                    │ grounding / chat queries             │ grounded prompts
-              ┌─────▼─────────────────────────────────────▼──────────┐
-              │         Foundry IQ knowledge layer                    │
-              │  Knowledge Source ─▶ Knowledge Base ─▶ synthesis      │
-              │  retrieval + citations [PROC-xxx]                     │
-              │                                                       │
-              │  Synthesis model (dual-mode):                         │
-              │   • FOUNDRY_MODE=local → Foundry Local (phi-3.5-mini, │
-              │     on-device, OpenAI-compatible) ← used in this demo │
-              │   • FOUNDRY_MODE=live  → Azure AI Search + AOAI       │
-              │   • FOUNDRY_MODE=mock  → deterministic offline        │
-              └────────┬──────────────────────────────────────────────┘
-                       │ knowledge
-        ┌──────────────┴──────────────┐
-        │ ISO 9001 processes           │   ┌─ M365 signals (synthetic) ─┐
-        │ (15 seeded + session-added)  │   │ Teams · Outlook · Planner · │
-        │ data/iso_processes.json      │   │ SharePoint                  │
-        │ dynamic in-memory store      │   │ stands in for Work IQ       │
-        └─────────────────────────────┘   └─────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph UI["🖥️ Frontend — React + Vite"]
+        direction LR
+        P1[Dashboard]
+        P2[Talk to Agents]
+        P3[Add Process]
+        P4[Company Map]
+        P5[Agent Portfolio]
+        P6[Telemetry &amp; Safety]
+    end
+
+    subgraph API["⚙️ Backend — FastAPI"]
+        ORCH["<b>Master Orchestrator</b><br/>7-step reasoning pipeline<br/>chat · train · invalidate"]
+        subgraph AGENTS["Diagnostic agents"]
+            direction LR
+            A1[Current State]
+            A2[Repetitive Work]
+            A3[Bottleneck]
+            A4[Non-Conformity]
+            A5[Flowchart]
+        end
+        FACTORY["<b>Agent Factory</b><br/>agent portfolio<br/>+ agent training"]
+        TELE["Telemetry<br/>instrumentation"]
+        ORCH --> AGENTS
+        ORCH --> FACTORY
+        AGENTS -.-> FACTORY
+        ORCH -.-> TELE
+    end
+
+    subgraph IQ["🧠 Foundry IQ — knowledge layer"]
+        KS["Knowledge Source"] --> KB["Knowledge Base"] --> SYN["Grounded synthesis<br/>+ citations [PROC-xxx]"]
+    end
+
+    subgraph MODEL["Synthesis model — dual-mode"]
+        direction LR
+        M1["<b>local</b><br/>Foundry Local<br/>phi-3.5-mini, on-device<br/>✓ used in this demo"]
+        M2["live<br/>Azure AI Search<br/>+ Azure OpenAI"]
+        M3["mock<br/>deterministic<br/>offline"]
+    end
+
+    subgraph DATA["📚 Knowledge sources — synthetic"]
+        direction LR
+        D1["ISO 9001 processes<br/>15 seeded + session-added<br/>dynamic in-memory store"]
+        D2["M365 signals<br/>Teams · Outlook · Planner · SharePoint<br/><i>stands in for Work IQ</i>"]
+    end
+
+    UI -->|REST| ORCH
+    API -->|grounding &amp; chat queries| IQ
+    IQ --> MODEL
+    IQ -->|reads| DATA
+
+    classDef frontend fill:#faf9f6,stroke:#1c1917,stroke-width:1px,color:#1c1917
+    classDef backend fill:#edf5f1,stroke:#1e5945,stroke-width:1px,color:#14110f
+    classDef knowledge fill:#fdf1ef,stroke:#c0392b,stroke-width:1px,color:#14110f
+    classDef model fill:#fff8f0,stroke:#b8860b,stroke-width:1px,color:#14110f
+    classDef data fill:#f4f1ea,stroke:#6b6b6b,stroke-width:1px,color:#1c1917
+    class P1,P2,P3,P4,P5,P6 frontend
+    class ORCH,A1,A2,A3,A4,A5,FACTORY,TELE backend
+    class KS,KB,SYN knowledge
+    class M1,M2,M3 model
+    class D1,D2 data
 ```
 
 ## Quick start
